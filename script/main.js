@@ -48,41 +48,59 @@ function createTearDrops() {
   }, 2000);
 }
 
-// Fungsi untuk memaksa autoplay musik
-function forceAutoplay() {
+// Audio handling
+function setupAudio() {
   const music = document.getElementById('backgroundMusic');
+  const playButton = document.getElementById('playButton');
+  const playText = playButton.querySelector('.play-text');
+  const playIcon = playButton.querySelector('.play-icon');
   
-  // Set volume ke level yang lebih rendah (5%)
+  // Set volume
   music.volume = 0.05;
   
-  // Coba putar musik dengan berbagai metode
-  function playMusic() {
-    const playPromise = music.play();
-    
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        // Autoplay berhasil
-        console.log('Autoplay started successfully');
-      }).catch(error => {
-        console.log('Autoplay failed:', error);
-      });
+  // Play/Pause function
+  function togglePlay() {
+    if (music.paused) {
+      const playPromise = music.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          // Playback started successfully
+          playText.textContent = 'Pause Musik';
+          playIcon.textContent = '⏸️';
+        }).catch(error => {
+          console.log('Playback failed:', error);
+          // Show error message
+          playText.textContent = 'Putar Musik';
+          playIcon.textContent = '▶️';
+        });
+      }
+    } else {
+      music.pause();
+      playText.textContent = 'Putar Musik';
+      playIcon.textContent = '▶️';
     }
   }
-
-  // Cek apakah datang dari landing page
-  if (localStorage.getItem('letterOpened') === 'true') {
-    // Tunggu sebentar untuk memastikan halaman sudah dimuat
-    setTimeout(playMusic, 1000);
-  }
-
-  // Coba putar musik saat halaman mendapatkan fokus
-  window.addEventListener('focus', playMusic);
   
-  // Coba putar musik saat halaman terlihat
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) {
-      playMusic();
-    }
+  // Add click event
+  playButton.addEventListener('click', togglePlay);
+  
+  // Add touch event for mobile
+  playButton.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    togglePlay();
+  }, { passive: false });
+  
+  // Handle audio ending
+  music.addEventListener('ended', () => {
+    playText.textContent = 'Putar Musik';
+    playIcon.textContent = '▶️';
+  });
+  
+  // Handle audio errors
+  music.addEventListener('error', () => {
+    playText.textContent = 'Error Musik';
+    playIcon.textContent = '❌';
   });
 }
 
@@ -169,45 +187,6 @@ function addTouchEffects() {
   });
 }
 
-// Optimize audio loading
-function optimizeAudio() {
-  const music = document.getElementById('backgroundMusic');
-  if (!music) return { initAudio: () => {} };
-  
-  let audioContext;
-  let isInitialized = false;
-  
-  // Preload audio
-  music.load();
-  
-  // Set volume
-  music.volume = 0.05;
-  
-  function initAudio() {
-    if (isInitialized) return;
-    
-    try {
-      if (!audioContext) {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      }
-      isInitialized = true;
-    } catch (error) {
-      console.error('Error initializing audio context:', error);
-    }
-  }
-  
-  // Resume audio context on user interaction
-  const resumeAudio = () => {
-    if (audioContext && audioContext.state === 'suspended') {
-      audioContext.resume().catch(console.error);
-    }
-  };
-  
-  document.addEventListener('touchstart', resumeAudio, { once: true });
-  
-  return { initAudio };
-}
-
 // Optimize animations for mobile
 function optimizeAnimations() {
   // Check if device is mobile
@@ -225,25 +204,13 @@ function optimizeAnimations() {
 
 // Initialize everything
 document.addEventListener('DOMContentLoaded', safeExecute(() => {
-  // Initialize audio
-  const { initAudio } = optimizeAudio();
+  // Setup audio
+  setupAudio();
   
   // Start animations
   const cleanupHearts = createFloatingHearts();
   const cleanupTouch = addTouchEffects();
   optimizeAnimations();
-  
-  // Initialize audio context on first interaction
-  document.addEventListener('touchstart', initAudio, { once: true });
-  
-  // Force autoplay
-  forceAutoplay();
-  
-  // Cleanup on page unload
-  window.addEventListener('unload', () => {
-    if (cleanupHearts) cleanupHearts();
-    if (cleanupTouch) cleanupTouch();
-  });
   
   // Animasi ketik untuk pesan utama
   const mainText = document.querySelector('.main-text');
@@ -273,5 +240,11 @@ document.addEventListener('DOMContentLoaded', safeExecute(() => {
     element.addEventListener('mouseout', () => {
       element.style.transform = 'scale(1)';
     });
+  });
+  
+  // Cleanup on page unload
+  window.addEventListener('unload', () => {
+    if (cleanupHearts) cleanupHearts();
+    if (cleanupTouch) cleanupTouch();
   });
 })); 

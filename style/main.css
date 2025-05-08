@@ -218,8 +218,9 @@ h1 {
 }
 
 /* Music Player Styles */
-.music-player {
+.music-box {
   margin: 20px 0;
+  text-align: center;
 }
 
 .play-button {
@@ -256,6 +257,13 @@ h1 {
 .play-text {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
+}
+
+.music-info {
+  font-size: 0.9rem;
+  color: #ad1457;
+  margin-top: 8px;
+  font-style: italic;
 }
 
 .music-frame {
@@ -296,6 +304,15 @@ h1 {
   
   .cry-emoji {
     width: 28px;
+  }
+  
+  .play-button {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+  }
+  
+  .music-info {
+    font-size: 0.85rem;
   }
 }
 
