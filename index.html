@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#b71c1c" />
+  <title>Surat dari Abrar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffe0ec 0%, #f8bbd0 50%, #b71c1c 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #b71c1c;
+      overflow: hidden;
+    }
+
+    .floating-hearts {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: float-up 4s linear infinite;
+      opacity: 0.6;
+    }
+
+    @keyframes float-up {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.6;
+      }
+      90% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-100px) scale(1);
+        opacity: 0;
+      }
+    }
+
+    .letter-container {
+      background: rgba(255,255,255,0.95);
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(183,28,28,0.15);
+      padding: 32px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      z-index: 2;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    @keyframes fadeIn {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .letter {
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .letter h1 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #b71c1c;
+      text-shadow: 2px 2px 4px rgba(183,28,28,0.1);
+    }
+
+    .letter p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #ad1457;
+      margin-bottom: 15px;
+    }
+
+    .open-button {
+      background: linear-gradient(135deg, #f06292 0%, #b71c1c 100%);
+      border: none;
+      border-radius: 50px;
+      padding: 15px 30px;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+      box-shadow: 0 4px 15px rgba(183,28,28,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .open-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.2),
+        transparent
+      );
+      transition: 0.5s;
+    }
+
+    .open-button:hover::before {
+      left: 100%;
+    }
+
+    .open-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(183,28,28,0.3);
+    }
+
+    .open-button:active {
+      transform: scale(0.95);
+    }
+
+    .heart-decoration {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      opacity: 0.6;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .heart-1 {
+      top: -20px;
+      left: -20px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .heart-2 {
+      bottom: -20px;
+      right: -20px;
+      animation: float 3s ease-in-out infinite 1.5s;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0); }
+      50% { transform: translateY(-10px) rotate(10deg); }
+      100% { transform: translateY(0) rotate(0); }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: #fff;
+      animation: sparkle 1.5s linear infinite;
+    }
+
+    @keyframes sparkle {
+      0% { transform: scale(0) rotate(0deg); opacity: 0; }
+      50% { transform: scale(1) rotate(180deg); opacity: 1; }
+      100% { transform: scale(0) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-hearts" id="floatingHearts"></div>
+  
+  <div class="letter-container">
+    <div class="heart-decoration heart-1">❤️</div>
+    <div class="heart-decoration heart-2">❤️</div>
+    
+    <div class="letter">
+      <h1>Surat dari Abrar</h1>
+      <p>
+        Ayang ini ada surat buat kamu!<br>
+        Klik tombol di bawah untuk membukanya...
+      </p>
+    </div>
+    
+    <button class="open-button" onclick="openLetter()">Buka Surat</button>
+    <button class="reset-button" onclick="resetLetter()" style="margin-top: 10px; background: none; border: none; color: #b71c1c; font-size: 0.9rem; cursor: pointer; opacity: 0.7;">Reset Surat</button>
+  </div>
+
+  <script>
+    // Fungsi untuk membuat floating hearts
+    function createFloatingHearts() {
+      const container = document.getElementById('floatingHearts');
+      const hearts = ['❤️', '💖', '💝', '💕', '💗'];
+      
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+        container.appendChild(heart);
+        
+        // Hapus heart setelah animasi selesai
+        setTimeout(() => {
+          heart.remove();
+        }, 6000);
+      }, 300);
+    }
+
+    // Fungsi untuk membuat sparkles
+    function createSparkles() {
+      const container = document.querySelector('.letter-container');
+      
+      setInterval(() => {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = Math.random() * 100 + '%';
+        sparkle.style.top = Math.random() * 100 + '%';
+        container.appendChild(sparkle);
+        
+        setTimeout(() => {
+          sparkle.remove();
+        }, 1500);
+      }, 200);
+    }
+
+    function openLetter() {
+      // Tambahkan efek sebelum redirect
+      const button = document.querySelector('.open-button');
+      button.style.transform = 'scale(0.95)';
+      
+      setTimeout(() => {
+        // Simpan status bahwa surat sudah dibuka
+        localStorage.setItem('letterOpened', 'true');
+        // Redirect ke halaman utama
+        window.location.href = 'main.html';
+      }, 300);
+    }
+
+    function resetLetter() {
+      localStorage.removeItem('letterOpened');
+      window.location.reload();
+    }
+
+    // Inisialisasi animasi
+    window.onload = function() {
+      if (localStorage.getItem('letterOpened') === 'true') {
+        window.location.href = 'main.html';
+      }
+      createFloatingHearts();
+      createSparkles();
+    }
+  </script>
+</body>
+</html> 
