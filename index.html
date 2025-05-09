@@ -259,9 +259,9 @@
       </audio>
       <button id="playButton" class="open-button">
         <span class="play-icon">▶️</span>
-        <span class="play-text">Putar Musik</span>
+        <span class="play-text">Buka Surat</span>
       </button>
-      <p class="music-info" style="font-size: 0.9rem; color: #ad1457; margin-top: 10px;">Klik tombol di atas untuk memutar musik</p>
+      <p class="music-info" style="font-size: 0.9rem; color: #ad1457; margin-top: 10px;">Klik tombol di atas untuk membuka surat</p>
     </div>
   </div>
 
@@ -270,20 +270,22 @@
     const backgroundMusic = document.getElementById('backgroundMusic');
     let isPlaying = false;
 
+    // Hapus pengecekan localStorage saat halaman dimuat
+    window.onload = function() {
+      // Mulai dengan animasi floating hearts
+      setInterval(createHeart, 300);
+    }
+
     playButton.addEventListener('click', function() {
       if (!isPlaying) {
         backgroundMusic.play();
         isPlaying = true;
-        playButton.innerHTML = '<span class="play-icon">⏸️</span><span class="play-text">Jeda Musik</span>';
+        playButton.innerHTML = '<span class="play-icon">⏸️</span><span class="play-text">Buka Surat</span>';
         
         // Redirect ke halaman utama setelah musik mulai diputar
         setTimeout(() => {
           window.location.href = 'main.html';
         }, 1000);
-      } else {
-        backgroundMusic.pause();
-        isPlaying = false;
-        playButton.innerHTML = '<span class="play-icon">▶️</span><span class="play-text">Putar Musik</span>';
       }
     });
 
@@ -299,15 +301,6 @@
       setTimeout(() => {
         heart.remove();
       }, 5000);
-    }
-
-    setInterval(createHeart, 300);
-
-    // Inisialisasi animasi
-    window.onload = function() {
-      if (localStorage.getItem('letterOpened') === 'true') {
-        window.location.href = 'main.html';
-      }
     }
   </script>
 </body>
