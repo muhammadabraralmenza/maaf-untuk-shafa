@@ -253,40 +253,26 @@
       </p>
     </div>
     
-    <div class="music-box">
-      <audio id="backgroundMusic" loop preload="auto">
-        <source src="audio/music.mp3" type="audio/mpeg">
-      </audio>
-      <button id="playButton" class="open-button">
-        <span class="play-icon">▶️</span>
-        <span class="play-text">Buka Surat</span>
-      </button>
-      <p class="music-info" style="font-size: 0.9rem; color: #ad1457; margin-top: 10px;">Klik tombol di atas untuk membuka surat</p>
-    </div>
+    <button id="playButton" class="open-button">
+      <span class="play-icon">▶️</span>
+      <span class="play-text">Buka Surat</span>
+    </button>
+    <p class="music-info" style="font-size: 0.9rem; color: #ad1457; margin-top: 10px;">Klik tombol di atas untuk membuka surat</p>
   </div>
 
   <script>
     const playButton = document.getElementById('playButton');
-    const backgroundMusic = document.getElementById('backgroundMusic');
-    let isPlaying = false;
 
-    // Hapus pengecekan localStorage saat halaman dimuat
     window.onload = function() {
-      // Mulai dengan animasi floating hearts
       setInterval(createHeart, 300);
     }
 
     playButton.addEventListener('click', function() {
-      if (!isPlaying) {
-        backgroundMusic.play();
-        isPlaying = true;
-        playButton.innerHTML = '<span class="play-icon">⏸️</span><span class="play-text">Buka Surat</span>';
-        
-        // Redirect ke halaman utama setelah musik mulai diputar
-        setTimeout(() => {
-          window.location.href = 'main.html';
-        }, 1000);
-      }
+      // Simpan status bahwa surat sudah dibuka dan musik harus diputar
+      localStorage.setItem('letterOpened', 'true');
+      localStorage.setItem('shouldPlayMusic', 'true');
+      // Redirect ke halaman utama
+      window.location.href = 'main.html';
     });
 
     // Membuat efek floating hearts

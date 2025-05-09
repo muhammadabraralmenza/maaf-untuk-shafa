@@ -48,6 +48,35 @@
       <p class="music-info">Klik tombol di atas untuk memutar musik</p>
     </div>
   </div>
-  <script src="script/main.js"></script>
+  <script>
+    const playButton = document.getElementById('playButton');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    let isPlaying = false;
+
+    // Set volume ke 5%
+    backgroundMusic.volume = 0.05;
+
+    // Cek apakah datang dari landing page dan musik harus diputar
+    if (localStorage.getItem('letterOpened') === 'true' && localStorage.getItem('shouldPlayMusic') === 'true') {
+      // Mulai putar musik otomatis
+      backgroundMusic.play();
+      isPlaying = true;
+      playButton.innerHTML = '<span class="play-icon">⏸️</span><span class="play-text">Jeda Musik</span>';
+      // Reset status musik
+      localStorage.removeItem('shouldPlayMusic');
+    }
+
+    playButton.addEventListener('click', function() {
+      if (!isPlaying) {
+        backgroundMusic.play();
+        isPlaying = true;
+        playButton.innerHTML = '<span class="play-icon">⏸️</span><span class="play-text">Jeda Musik</span>';
+      } else {
+        backgroundMusic.pause();
+        isPlaying = false;
+        playButton.innerHTML = '<span class="play-icon">▶️</span><span class="play-text">Putar Musik</span>';
+      }
+    });
+  </script>
 </body>
 </html> 
