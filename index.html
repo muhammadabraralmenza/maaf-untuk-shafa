@@ -268,9 +268,8 @@
     }
 
     playButton.addEventListener('click', function() {
-      // Simpan status bahwa surat sudah dibuka dan musik harus diputar
+      // Simpan status bahwa surat sudah dibuka
       localStorage.setItem('letterOpened', 'true');
-      localStorage.setItem('shouldPlayMusic', 'true');
       // Redirect ke halaman utama
       window.location.href = 'main.html';
     });

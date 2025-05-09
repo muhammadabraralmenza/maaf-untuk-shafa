@@ -56,15 +56,13 @@
     // Set volume ke 5%
     backgroundMusic.volume = 0.05;
 
-    // Cek apakah datang dari landing page dan musik harus diputar
-    if (localStorage.getItem('letterOpened') === 'true' && localStorage.getItem('shouldPlayMusic') === 'true') {
-      // Mulai putar musik otomatis
-      backgroundMusic.play();
+    // Mulai putar musik otomatis saat halaman dimuat
+    backgroundMusic.play().then(() => {
       isPlaying = true;
       playButton.innerHTML = '<span class="play-icon">⏸️</span><span class="play-text">Jeda Musik</span>';
-      // Reset status musik
-      localStorage.removeItem('shouldPlayMusic');
-    }
+    }).catch(error => {
+      console.log("Autoplay prevented:", error);
+    });
 
     playButton.addEventListener('click', function() {
       if (!isPlaying) {
