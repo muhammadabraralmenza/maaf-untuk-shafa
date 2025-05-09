@@ -10,178 +10,190 @@ body {
   overflow-x: hidden;
   overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;
+  transition: background 0.5s ease;
 }
 
 .container {
-  max-width: 420px;
-  margin: 20px auto;
-  background: rgba(255,255,255,0.95);
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(183,28,28,0.15);
-  padding: 24px 16px;
-  text-align: center;
-  position: relative;
-  width: 90%;
-  box-sizing: border-box;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.2);
-  animation: containerAppear 1s ease-out;
-  transform: translateZ(0);
-  will-change: transform;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards;
 }
 
-@keyframes containerAppear {
+@keyframes fadeInUp {
   from {
-    transform: scale(0.9);
     opacity: 0;
+    transform: translateY(20px);
   }
   to {
-    transform: scale(1);
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 .header {
   position: relative;
-  margin-bottom: 16px;
+  text-align: center;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease;
+}
+
+.header:hover {
+  transform: translateY(-5px);
 }
 
 .foto-shafa {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 4px solid #f06292;
-  box-shadow: 0 4px 16px rgba(183,28,28,0.12);
-  margin-bottom: 8px;
-  transition: all 0.3s ease;
-  animation: photoAppear 1s ease-out 0.5s both;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(183,28,28,0.2);
+  margin: 0 auto;
+  display: block;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: brightness(1.05);
 }
 
-@keyframes photoAppear {
-  from {
-    transform: scale(0) rotate(-180deg);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) rotate(0);
-    opacity: 1;
-  }
+.foto-shafa:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 40px rgba(183,28,28,0.25);
+  filter: brightness(1.1);
+}
+
+.broken-heart, .cry-emoji {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  transition: transform 0.3s ease;
 }
 
 .broken-heart {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 40px;
-  animation: shake 1.2s infinite, heartAppear 1s ease-out 0.7s both;
+  top: 20px;
+  right: 20px;
+  animation: float 3s ease-in-out infinite;
 }
 
 .cry-emoji {
-  position: absolute;
-  bottom: -10px;
-  left: 10px;
-  width: 32px;
-  animation: teardrop 1.5s infinite, emojiAppear 1s ease-out 0.9s both;
+  bottom: 20px;
+  left: 20px;
+  animation: float 3s ease-in-out infinite 1.5s;
 }
 
-@keyframes heartAppear {
-  from {
-    transform: scale(0) rotate(-180deg);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) rotate(0);
-    opacity: 1;
-  }
+.content {
+  background: rgba(255,255,255,0.95);
+  border-radius: 24px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 32px rgba(183,28,28,0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
 }
 
-@keyframes emojiAppear {
-  from {
-    transform: scale(0) rotate(180deg);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1) rotate(0);
-    opacity: 1;
-  }
+.content:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(183,28,28,0.2);
 }
 
-@keyframes shake {
-  0% { transform: rotate(-10deg); }
-  20% { transform: rotate(10deg); }
-  40% { transform: rotate(-10deg); }
-  60% { transform: rotate(10deg); }
-  80% { transform: rotate(-10deg); }
-  100% { transform: rotate(0deg); }
-}
-
-@keyframes teardrop {
-  0% { transform: translateY(0); opacity: 1; }
-  60% { transform: translateY(10px); opacity: 0.7; }
-  100% { transform: translateY(0); opacity: 1; }
-}
-
-h1 {
+.content h1 {
+  font-size: clamp(1.8rem, 6vw, 2.5rem);
+  margin-bottom: 20px;
+  text-align: center;
   color: #b71c1c;
-  font-size: 1.8rem;
-  margin-bottom: 12px;
-  font-weight: 600;
   text-shadow: 2px 2px 4px rgba(183,28,28,0.1);
-  animation: titleAppear 1s ease-out 1.1s both;
+  transition: color 0.3s ease;
 }
 
-@keyframes titleAppear {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.main-text {
-  font-size: 1.1rem;
+.main-text, .sub-text {
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  line-height: 1.8;
   color: #ad1457;
-  margin-bottom: 10px;
-  line-height: 1.5;
-  animation: textAppear 1s ease-out 1.3s both;
+  margin-bottom: 15px;
+  text-align: center;
+  transition: color 0.3s ease;
+  letter-spacing: 0.3px;
 }
 
-.sub-text {
-  font-size: 0.95rem;
-  color: #6d0033;
-  margin-bottom: 18px;
-  line-height: 1.5;
-  animation: textAppear 1s ease-out 1.5s both;
+.music-box {
+  text-align: center;
+  margin-top: 30px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease forwards 0.5s;
 }
 
-@keyframes textAppear {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.play-button {
+  background: linear-gradient(135deg, #f06292 0%, #b71c1c 100%);
+  border: none;
+  border-radius: 50px;
+  padding: clamp(12px, 4vw, 15px) clamp(20px, 6vw, 30px);
+  color: white;
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  box-shadow: 0 4px 15px rgba(183,28,28,0.2);
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
 }
 
-.cry {
-  font-size: 1.3em;
-  color: #b71c1c;
-  display: inline-block;
-  animation: cryShake 0.5s ease-in-out infinite;
+.play-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.2),
+    transparent
+  );
+  transition: 0.5s;
 }
 
-@keyframes cryShake {
-  0% { transform: rotate(0); }
-  25% { transform: rotate(-10deg); }
-  75% { transform: rotate(10deg); }
-  100% { transform: rotate(0); }
+.play-button:hover::before {
+  left: 100%;
+}
+
+.play-button:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(183,28,28,0.3);
+}
+
+.play-button:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.music-info {
+  font-size: clamp(0.9rem, 3vw, 1rem);
+  color: #ad1457;
+  margin-top: 10px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.music-info:hover {
+  opacity: 1;
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-10px) rotate(10deg); }
+  100% { transform: translateY(0) rotate(0); }
 }
 
 /* Floating hearts background */
@@ -198,6 +210,11 @@ h1 {
   font-size: 20px;
   animation: float-up 4s linear infinite;
   opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.heart:hover {
+  opacity: 0.8;
 }
 
 @keyframes float-up {
@@ -217,109 +234,54 @@ h1 {
   }
 }
 
-/* Music Player Styles */
-.music-box {
-  margin: 20px 0;
-  text-align: center;
-}
-
-.play-button {
-  background: linear-gradient(135deg, #f06292 0%, #b71c1c 100%);
-  border: none;
-  border-radius: 50px;
-  padding: 12px 24px;
-  color: white;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 auto;
-  box-shadow: 0 4px 15px rgba(183,28,28,0.2);
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-.play-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(183,28,28,0.3);
-}
-
-.play-button:active {
-  transform: scale(0.95);
-}
-
-.play-icon {
-  font-size: 1.1rem;
-}
-
-.play-text {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 500;
-}
-
-.music-info {
-  font-size: 0.9rem;
-  color: #ad1457;
-  margin-top: 8px;
-  font-style: italic;
-}
-
-.music-frame {
-  display: none;
-}
-
 /* Media Queries */
-@media (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .container {
-    margin: 10px auto;
-    padding: 20px 12px;
-    width: 95%;
+    padding: 15px;
   }
-  
-  .foto-shafa {
-    width: 90px;
-    height: 90px;
+
+  .content {
+    padding: 20px;
   }
-  
-  h1 {
-    font-size: 1.6rem;
-    margin-bottom: 10px;
+
+  .broken-heart, .cry-emoji {
+    width: 40px;
+    height: 40px;
   }
-  
-  .main-text {
-    font-size: 1rem;
-    margin-bottom: 8px;
-  }
-  
-  .sub-text {
-    font-size: 0.9rem;
-    margin-bottom: 15px;
-  }
-  
+
   .broken-heart {
-    width: 32px;
+    top: 10px;
+    right: 10px;
   }
-  
+
   .cry-emoji {
-    width: 28px;
-  }
-  
-  .play-button {
-    padding: 15px 30px;
-    font-size: 1.1rem;
-  }
-  
-  .music-info {
-    font-size: 0.85rem;
+    bottom: 10px;
+    left: 10px;
   }
 }
 
-/* Android-specific optimizations */
-@supports (-webkit-touch-callout: none) {
+@media screen and (max-width: 320px) {
   .container {
-    background: rgba(255,255,255,0.98);
+    padding: 10px;
+  }
+
+  .content {
+    padding: 15px;
+  }
+
+  .play-button {
+    padding: 10px 20px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  .play-button:hover {
+    transform: none;
+  }
+  
+  .play-button:active {
+    transform: scale(0.95);
   }
 }
 
@@ -336,12 +298,22 @@ img {
   -webkit-user-select: none;
 }
 
-/* Touch feedback */
-@media (hover: none) {
-  .foto-shafa:active,
-  .broken-heart:active,
-  .cry-emoji:active {
-    transform: scale(0.95);
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d1a1a 50%, #4a1a1a 100%);
+  }
+  
+  .content {
+    background: rgba(255,255,255,0.98);
+  }
+  
+  .content h1 {
+    color: #d32f2f;
+  }
+  
+  .main-text, .sub-text {
+    color: #c2185b;
   }
 }
 
@@ -351,10 +323,11 @@ img {
   .foto-shafa,
   .broken-heart,
   .cry-emoji,
-  h1,
+  .content h1,
   .main-text,
   .sub-text {
     animation: none;
+    transition: none;
   }
   
   .heart {

@@ -67,6 +67,7 @@
       z-index: 2;
       backdrop-filter: blur(10px);
       border: 1px solid rgba(255,255,255,0.2);
+      margin: 20px;
     }
 
     @keyframes fadeIn {
@@ -82,14 +83,14 @@
     }
 
     .letter h1 {
-      font-size: 1.8rem;
+      font-size: clamp(1.5rem, 5vw, 1.8rem);
       margin-bottom: 20px;
       color: #b71c1c;
       text-shadow: 2px 2px 4px rgba(183,28,28,0.1);
     }
 
     .letter p {
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 4vw, 1.1rem);
       line-height: 1.6;
       color: #ad1457;
       margin-bottom: 15px;
@@ -99,9 +100,9 @@
       background: linear-gradient(135deg, #f06292 0%, #b71c1c 100%);
       border: none;
       border-radius: 50px;
-      padding: 15px 30px;
+      padding: clamp(12px, 4vw, 15px) clamp(20px, 6vw, 30px);
       color: white;
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       cursor: pointer;
       transition: all 0.3s ease;
       font-family: 'Poppins', sans-serif;
@@ -109,6 +110,9 @@
       box-shadow: 0 4px 15px rgba(183,28,28,0.2);
       position: relative;
       overflow: hidden;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
     }
 
     .open-button::before {
@@ -185,6 +189,52 @@
       0% { transform: scale(0) rotate(0deg); opacity: 0; }
       50% { transform: scale(1) rotate(180deg); opacity: 1; }
       100% { transform: scale(0) rotate(360deg); opacity: 0; }
+    }
+
+    /* Media Queries untuk perangkat mobile */
+    @media screen and (max-width: 480px) {
+      .letter-container {
+        padding: 20px;
+        margin: 15px;
+      }
+
+      .heart-decoration {
+        width: 30px;
+        height: 30px;
+      }
+
+      .heart-1 {
+        top: -15px;
+        left: -15px;
+      }
+
+      .heart-2 {
+        bottom: -15px;
+        right: -15px;
+      }
+    }
+
+    /* Media Queries untuk perangkat yang sangat kecil */
+    @media screen and (max-width: 320px) {
+      .letter-container {
+        padding: 15px;
+        margin: 10px;
+      }
+
+      .open-button {
+        padding: 10px 20px;
+      }
+    }
+
+    /* Optimasi untuk touch devices */
+    @media (hover: none) {
+      .open-button:hover {
+        transform: none;
+      }
+      
+      .open-button:active {
+        transform: scale(0.95);
+      }
     }
   </style>
 </head>
