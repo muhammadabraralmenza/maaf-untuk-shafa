@@ -203,73 +203,61 @@
       </p>
     </div>
     
-    <button class="open-button" onclick="openLetter()">Buka Surat</button>
-    <button class="reset-button" onclick="resetLetter()" style="margin-top: 10px; background: none; border: none; color: #b71c1c; font-size: 0.9rem; cursor: pointer; opacity: 0.7;">Reset Surat</button>
+    <div class="music-box">
+      <audio id="backgroundMusic" loop preload="auto">
+        <source src="audio/music.mp3" type="audio/mpeg">
+      </audio>
+      <button id="playButton" class="open-button">
+        <span class="play-icon">▶️</span>
+        <span class="play-text">Putar Musik</span>
+      </button>
+      <p class="music-info" style="font-size: 0.9rem; color: #ad1457; margin-top: 10px;">Klik tombol di atas untuk memutar musik</p>
+    </div>
   </div>
 
   <script>
-    // Fungsi untuk membuat floating hearts
-    function createFloatingHearts() {
-      const container = document.getElementById('floatingHearts');
-      const hearts = ['❤️', '💖', '💝', '💕', '💗'];
-      
-      setInterval(() => {
-        const heart = document.createElement('div');
-        heart.className = 'heart';
-        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (3 + Math.random() * 3) + 's';
-        container.appendChild(heart);
-        
-        // Hapus heart setelah animasi selesai
-        setTimeout(() => {
-          heart.remove();
-        }, 6000);
-      }, 300);
-    }
+    const playButton = document.getElementById('playButton');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    let isPlaying = false;
 
-    // Fungsi untuk membuat sparkles
-    function createSparkles() {
-      const container = document.querySelector('.letter-container');
-      
-      setInterval(() => {
-        const sparkle = document.createElement('div');
-        sparkle.className = 'sparkle';
-        sparkle.style.left = Math.random() * 100 + '%';
-        sparkle.style.top = Math.random() * 100 + '%';
-        container.appendChild(sparkle);
+    playButton.addEventListener('click', function() {
+      if (!isPlaying) {
+        backgroundMusic.play();
+        isPlaying = true;
+        playButton.innerHTML = '<span class="play-icon">⏸️</span><span class="play-text">Jeda Musik</span>';
         
+        // Redirect ke halaman utama setelah musik mulai diputar
         setTimeout(() => {
-          sparkle.remove();
-        }, 1500);
-      }, 200);
-    }
+          window.location.href = 'main.html';
+        }, 1000);
+      } else {
+        backgroundMusic.pause();
+        isPlaying = false;
+        playButton.innerHTML = '<span class="play-icon">▶️</span><span class="play-text">Putar Musik</span>';
+      }
+    });
 
-    function openLetter() {
-      // Tambahkan efek sebelum redirect
-      const button = document.querySelector('.open-button');
-      button.style.transform = 'scale(0.95)';
+    // Membuat efek floating hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '❤️';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+      document.getElementById('floatingHearts').appendChild(heart);
       
       setTimeout(() => {
-        // Simpan status bahwa surat sudah dibuka
-        localStorage.setItem('letterOpened', 'true');
-        // Redirect ke halaman utama
-        window.location.href = 'main.html';
-      }, 300);
+        heart.remove();
+      }, 5000);
     }
 
-    function resetLetter() {
-      localStorage.removeItem('letterOpened');
-      window.location.reload();
-    }
+    setInterval(createHeart, 300);
 
     // Inisialisasi animasi
     window.onload = function() {
       if (localStorage.getItem('letterOpened') === 'true') {
         window.location.href = 'main.html';
       }
-      createFloatingHearts();
-      createSparkles();
     }
   </script>
 </body>
